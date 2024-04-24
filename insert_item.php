@@ -1,7 +1,29 @@
+<?php 
+// Check if the cookie indicating operation success exists
+if(isset($_COOKIE['operation_status']) && $_COOKIE['operation_status'] == 'success') {
+    ?>
+    <script> alert("Successfully Registered!") </script>
+    <?php 
+    // Clear the cookie after displaying the message
+    setcookie('operation_status', '', time() - 3600, '/');
+}
+if(isset($_COOKIE['item_exists']) && $_COOKIE['item_exists'] == 'true') {
+    ?>
+    <script> alert("Item Already Exsists!") </script>
+    <?php 
+    // Clear the cookie after displaying the message
+    setcookie('item_exists', '', time() - 3600, '/');
+}
+if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
+    ?>
+    <script> alert("There has been an error. Try again in a few minutes or contact an admin.") </script>
+    <?php 
+    // Clear the cookie after displaying the message
+    setcookie('error', '', time() - 3600, '/');
+}
+?>
 <!doctype html>
 <html lang="en">
-
- 
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -65,9 +87,9 @@
                         <div class="offset-xl-2 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="card">
                                 <div class="card-header p-4">
-                                     <h1><a class="pt-2 d-inline-block" href="index.html">Insert Item</a><h1>
+                                     <h1>Insert Item<h1>
                                 </div>
-                                <form id="item_register_form" method="post" action="insert_item-function.php">
+                                <form method = "post" action = "insert_item-function.php"> 
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="inputText3" class="col-form-label">Item Code</label>
@@ -95,11 +117,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="inputText3" class="col-form-label">Date Added</label>
-                                        <input id="inputText3" type="date" class="form-control"name="Register_Date"  required>
+                                        <input id="inputText3" type="datetime-local" class="form-control"name="Register_Date"  required>
                                     </div>
                                     <div style = "display: inline-block;">
-                                        <button class="btn btn-primary" type="button" name="item_register" id = "item_register">Register Item</button>
-                                        <button class="btn btn-danger" type="reset">Reset</button>
+                                        <button class="btn btn-primary" type="item_register" name="item_register" onclick = "return confirm('Are you sure?')" >Register Item</button>
+                                        <button class="btn btn-danger" type="reset" onclick = "return confirm('Are you sure?')">Reset</button>
                                     </div>
                                 </div>
                                 </form>
@@ -110,88 +132,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Modal for confirmation -->
-            <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="confirmationModalLabel">Confirm Action</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Are you sure you want to register this item?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary" id="confirmRegisterBtn">Confirm</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal for item exists -->
-            <div class="modal fade" id="itemExistsModal" tabindex="-1" role="dialog" aria-labelledby="itemExistsModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="itemExistsModalLabel">Item Already Exists</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            This item already exists in the table.
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal for success -->
-            <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="successModalLabel">Registration Successful</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            The item has been successfully registered.
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal for other errors -->
-            <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="errorModalLabel">Error</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            An error occurred while processing your request. Please try again later.
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
@@ -227,20 +167,5 @@
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="assets/vendor/slimscroll/jquery.slimscroll.js"></script>
     <script src="assets/libs/js/main-js.js"></script>
-    <script>
-    // Function to show the confirmation modal
-    $('#item_register').click(function(){
-        $('#confirmationModal').modal('show');
-    });
-
-    // Function to handle registration confirmation
-    $('#confirmRegisterBtn').click(function(){
-        // Submit the form
-        $('#item_register_form').submit();
-    });
-</script>
-
-
 </body>
- 
 </html>

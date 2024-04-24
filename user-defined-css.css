@@ -1,0 +1,16 @@
+.select-wrapper {
+    position: relative;
+}
+
+.arrow-down {
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Adjust as needed */
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #333; /* Color of the arrow */
+    pointer-events: none; /* Ensure the arrow doesn't interfere with select box */
+}
