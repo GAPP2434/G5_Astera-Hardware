@@ -44,14 +44,14 @@
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="page-header">
-                            <h2 class="pageheader-title">Blank Pageheader </h2>
+                            <h2 class="pageheader-title">Item Withdrawal</h2>
                             <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
                             <div class="page-breadcrumb">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
                                         <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Pages</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Blank Pageheader</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Item Withdrawal</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -62,11 +62,53 @@
                 <!-- end pageheader -->
                 <!-- ============================================================== -->
                 <div class="row">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                        <h3 class="text-center">Content goes here!</h3>
-                    </div>
-                </div>
-            </div>
+                    <div class="offset-xl-2 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-header p-4">
+                                <h1>Item Withdrawal<h1>
+                            </div>
+                            <form action = "" method = "POST">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="inputText3" class="col-form-label">Item Code</label>
+                                    <div class="input-group mb-3">
+                                    <select class = "form-control"></select>
+                                        
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputText3" class="col-form-label">Item Name</label>
+                                    <input id="inputText3" type="text" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputText3" class="col-form-label">Item Brand</label>
+                                    <input id="inputText3" type="text" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputText3" class="col-form-label">Item Model</label>
+                                    <input id="inputText3" type="text" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputText3" class="col-form-label">Quantity</label>
+                                    <input id="inputText3" type="number" class="form-control" step = "1" required >
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputText3" class="col-form-label">Price</label>
+                                    <input id="inputText3" type="text" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                   <label for="inputText3" class="col-form-label">Date Added</label>
+                                   <input id="inputText3" type="date" class="form-control" required>
+                                 </div>
+                                <div style = "display: inline-block;">
+                                    <a href="#" class="btn btn-primary">Deposit Item</a>
+                                    <a href="#" class="btn btn-danger">Reset</a>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div> 
+                </div> 
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->

@@ -50,12 +50,12 @@
             $password = $_POST['password'];
 
             // Retrieve the hashed password and fullname from the database for the given username (case-sensitive)
-            $query = "SELECT dPassword, dFullname FROM tblusers WHERE BINARY dUsername = ?";
+            $query = "SELECT dPassword FROM tblusers WHERE BINARY dUsername = ?";
             $stmt = mysqli_prepare($conn, $query);
             mysqli_stmt_bind_param($stmt, "s", $username);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_store_result($stmt);
-            mysqli_stmt_bind_result($stmt, $hashedPassword, $fullname);
+            mysqli_stmt_bind_result($stmt, $hashedPassword);
 
             $count = mysqli_stmt_num_rows($stmt);
             
@@ -65,16 +65,10 @@
                 // Verify the entered password against the hashed password
                 if (password_verify($password, $hashedPassword)) {
                     // Password is correct
-                    // Check if user has logged in before
-                    $checkLog = mysqli_query($conn, "SELECT COUNT(*) AS login_count FROM tbllogs WHERE dAccount = '$username'");
-                    $loginCountRow = mysqli_fetch_assoc($checkLog);
-                    $loginCount = $loginCountRow['login_count'] + 1; // Increment login count
 
                     // Insert login history
-                    $insertLog = mysqli_query($conn, "INSERT INTO `tbllogs`(`dTransactiondate`, `dTranstype`, `dAccount`) 
-                        VALUES ('$currentdate','LOGIN','$username')");
-
-                    echo "<p class='welcome'>Welcome $fullname</p>";
+                    $insertLog = mysqli_query($conn, "INSERT INTO `tbllogs`(`dUsername`, `dType`, `dRemark`, `dDate`) 
+                        VALUES ('".$username."','User','LOGIN','".$currentdate."')");
 
                     $_SESSION['useraccess'] = '1';
                     $_SESSION['username'] = $username;

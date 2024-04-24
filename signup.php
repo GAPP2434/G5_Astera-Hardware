@@ -33,21 +33,13 @@
     date_default_timezone_set('Asia/Manila');
     $currentdate = date('Y-m-d H:i:s');
 
-    $SFname = $_POST['Sfullname'];
     $SUsername = $_POST['Susername'];
-    $SEmail = $_POST['Semail'];
     $SPassword = $_POST['Spassword'];
     $SCPassword = $_POST['Scpassword'];
-    $SCourse = $_POST['Scourse'];
-    $SYear = $_POST['Syear'];
+    $SEmail = $_POST['Semail'];
 
     // Validation
     $errors = [];
-
-    // Validate Full Name
-    if (strlen($SFname) < 3 || strlen($SFname) > 50) {
-        $errors[] = "Full Name must be between 3 and 50 characters long.";
-    }
 
     // Validate Username
     if (strlen($SUsername) < 3 || strlen($SUsername) > 20) {
@@ -83,12 +75,12 @@
         $countentry = mysqli_num_rows($selecteduser);
 
         if ($countentry == 0) {
-            $signup = mysqli_query($conn, "INSERT INTO `tblusers`(`dUsername`, `dPassword`, `dFullname`, `status`, `dCourse`, `dYear`, `dEmail`) 
-            VALUES ('".$SUsername."','".$hashedPassword."','".$SFname."','active', '".$SCourse."','".$SYear."','".$SEmail."')");
+            $signup = mysqli_query($conn, "INSERT INTO `tblusers`(`dUsername`, `dPassword`,`dEmail`, `dDate`) 
+            VALUES ('".$SUsername."','".$hashedPassword."','".$SEmail."', '".$currentdate."')");
             
             if ($signup) {
-                $signuplog = mysqli_query($conn, "INSERT INTO `tblregisterlogs`(`dUsername`, `dRegisterDate`) 
-                VALUES ('".$SUsername."','".$currentdate."')");
+                $signuplog = mysqli_query($conn, "INSERT INTO `tbllogs`(`dUsername`, `dType`, `dRemark`, `dDate`) 
+                VALUES ('".$SUsername."','User','REGISTER','".$currentdate."')");
                 echo "<div class='message-box'><p class='success'>Successfully Registered</p></div>";
                 
             } else {

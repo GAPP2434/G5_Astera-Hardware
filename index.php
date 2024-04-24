@@ -1,3 +1,4 @@
+<?php $username = $_SESSION['username']; ?>
 <!doctype html>
 <html lang="en">
  
