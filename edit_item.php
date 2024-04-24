@@ -1,7 +1,22 @@
+<?php 
+// Check if the cookie indicating operation success exists
+if(isset($_COOKIE['operation_status']) && $_COOKIE['operation_status'] == 'success') {
+    ?>
+    <script> alert("Successfully Edited!") </script>
+    <?php 
+    // Clear the cookie after displaying the message
+    setcookie('operation_status', '', time() - 3600, '/');
+}
+if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
+    ?>
+    <script> alert("There has been an error. Try again in a few minutes or contact an admin.") </script>
+    <?php 
+    // Clear the cookie after displaying the message
+    setcookie('error', '', time() - 3600, '/');
+}
+?>
 <!doctype html>
 <html lang="en">
-
- 
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -69,7 +84,7 @@
                 <h1>Edit Item</h1>
             </div>
             <div class="card-body">
-                <form>
+                <form method = "post" action = "edit_item-function.php">
                     <div class="form-group">
                         <div class="select-wrapper">
                             <select id="inputSelect" class="form-control" name="Item_Code" required>
@@ -122,7 +137,7 @@
                         <input id="inputText3" type="datetime-local" class="form-control" name="Register_Date" required>
                     </div>
                     <div style="display: inline-block;">
-                        <button class="btn btn-primary" type="item_register" name="item_register" onclick="return confirm('Are you sure?')">Register Item</button>
+                        <button class="btn btn-primary" type="item_edit" name="item_edit" onclick="return confirm('Are you sure?')">Edit Item</button>
                         <button class="btn btn-danger" type="reset" onclick="return confirm('Are you sure?')">Reset</button>
                     </div>
                 </form>
@@ -187,7 +202,35 @@
         document.getElementById('itemQty').value = itemQty;
         document.getElementById('itemPrice').value = itemPrice;
     });
+
+    // Clear input fields when the page is loaded or refreshed
+    window.addEventListener('DOMContentLoaded', function() {
+        clearInputFields();
+    });
+
+    function clearInputFields() {
+        document.getElementById('inputSelect').value = ''; // Clear the selected option
+        document.getElementById('itemName').value = '';
+        document.getElementById('itemBrand').value = '';
+        document.getElementById('itemModel').value = '';
+        document.getElementById('itemQty').value = '';
+        document.getElementById('itemPrice').value = '';
+    }
+        // Prevent non-numeric characters in the quantity field
+    document.getElementById('itemQty').addEventListener('input', function() {
+        if (isNaN(parseFloat(this.value))) {
+            this.value = '';
+        }
+    });
+
+    // Prevent non-numeric characters in the price field
+    document.getElementById('itemPrice').addEventListener('input', function() {
+        if (isNaN(parseFloat(this.value))) {
+            this.value = '';
+        }
+    });
 </script>
+
 </body>
  
 </html>
