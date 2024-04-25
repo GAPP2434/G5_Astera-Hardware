@@ -73,7 +73,6 @@
                                     <label for="inputText3" class="col-form-label">Item Code</label>
                                     <div class="input-group mb-3">
                                     <select class = "form-control"></select>
-                                        
                                     </div>
                                 </div>
                                 <div class="form-group">

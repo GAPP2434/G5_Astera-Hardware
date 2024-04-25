@@ -1,3 +1,25 @@
+<?php 
+session_start();
+$username = $_SESSION['username']; 
+if(!isset($username)){
+    header("Location: login.html");
+}
+// Check if the cookie indicating operation success exists
+if(isset($_COOKIE['operation_status']) && $_COOKIE['operation_status'] == 'success') {
+    ?>
+    <script> alert("Successfully Deleted Item!") </script>
+    <?php 
+    // Clear the cookie after displaying the message
+    setcookie('operation_status', '', time() - 3600, '/');
+}
+if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
+    ?>
+    <script> alert("There has been an error. Try again in a few minutes or contact an admin.") </script>
+    <?php 
+    // Clear the cookie after displaying the message
+    setcookie('error', '', time() - 3600, '/');
+}
+?>
 <!doctype html>
 <html lang="en">
 
@@ -49,14 +71,14 @@
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="page-header">
-                            <h2 class="pageheader-title">Blank Pageheader </h2>
+                            <h2 class="pageheader-title">Delete Items</h2>
                             <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
                             <div class="page-breadcrumb">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
                                         <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Pages</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Blank Pageheader</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Delete Items</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -69,45 +91,54 @@
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="mb-0">Data Tables- Print, Excel, CSV, PDF Buttons</h5>
-                                <p>This example shows DataTables and the Buttons extension being used with the Bootstrap 4 framework providing the styling.</p>
+                                <h5 class="mb-0">Delete Items</h5>
+                                <p>Choose a row to delete from the dabase. (WARNING: THIS WILL PERMANENTLY DELETE THE DATA FROM THE DATABASE)</p>
                             </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table id="example" class="table table-bordered second" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
-                                                <td style = "border: none"></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
-                                                <td style = "border: none"><center><abutton type = "delete" name = "delete" class="btn btn-danger">Delete</button></center></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Garrett Winters</td>
-                                                <td>Accountant</td>
-                                                <td>Tokyo</td>
-                                                <td>63</td>
-                                                <td>2011/07/25</td>
-                                                <td>$170,750</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="example" class="table table-bordered second" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Item Code</th>
+                                                    <th>Item Name</th>
+                                                    <th>Item Brand</th>
+                                                    <th>Item Model</th>
+                                                    <th>Quantity</th>
+                                                    <th>Price</th>
+                                                    <th>Date Added</th>
+                                                    <td></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                include "dbcon.php";
+                                                $query = mysqli_query($conn, "SELECT * FROM tblmasterlist");
+                                                while ($rowx6 = mysqli_fetch_array($query)) {
+                                                    ?>
+                                                    <tr>
+                                                        <td><?php echo $rowx6['dItemCode'];?></td>
+                                                        <td><?php echo $rowx6['dItemName'];?> </td>
+                                                        <td><?php echo $rowx6['dItemBrand'];?></td>
+                                                        <td><?php echo $rowx6['dItemModel'];?></td>
+                                                        <td><?php echo $rowx6['dItemQuantity'];?></td>
+                                                        <td><?php echo $rowx6['dItemPrice'];?></td>
+                                                        <td><?php echo $rowx6['dDateAdded'];?></td>
+                                                        <td><center>
+                                                            <form method="post" action="delete_item-function.php">
+                                                                <input type="hidden" name="item_code" value="<?php echo $rowx6['dItemCode']; ?>">
+                                                                <input type="hidden" name="date_added" value="<?php echo $rowx6['dDateAdded']; ?>">
+                                                                <button class='badge btn-danger' type="submit" name="delete_item" onclick="return confirm('Are you sure?')">Delete</button>
+                                                            </form>
+                                                        </center></td>
+                                                    </tr>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
                         </div>
                     </div>
             <!-- ============================================================== -->
