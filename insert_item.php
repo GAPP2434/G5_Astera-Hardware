@@ -1,9 +1,4 @@
 <?php 
-session_start();
-$username = $_SESSION['username']; 
-if(!isset($username)){
-    header("Location: login.html");
-}
 // Check if the cookie indicating operation success exists
 if(isset($_COOKIE['operation_status']) && $_COOKIE['operation_status'] == 'success') {
     ?>

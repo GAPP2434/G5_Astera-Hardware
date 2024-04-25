@@ -1,14 +1,10 @@
 <?php
-session_start();
-$username = $_SESSION['username']; 
-if(!isset($username)){
-    header("Location: login.html");
-}
-
 // Include your database connection code here
 include 'dbcon.php';
+session_start();
 date_default_timezone_set('Asia/Manila');
 $currentdate = date('Y-m-d H:i:s');
+$username = $_SESSION['username'];
 
 // Check if the form is submitted
 if (isset($_POST['item_edit'])) {
