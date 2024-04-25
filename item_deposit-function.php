@@ -21,15 +21,15 @@ if (isset($_POST['item_deposit'])){
     if ($total >= 0){
         $update = mysqli_query($conn, "UPDATE `tblmasterlist` SET `dItemQuantity`='$total' WHERE dItemCode = '$itemcode'");
         $inserthistory = mysqli_query($conn, "INSERT INTO `tblitemhistory`(`dUsername`, `dItemCode`, `dType`, `dQty_in`, `dQty_out`, `dQty_total`, `dDateAdded`) 
-        VALUES ('$username', '$itemcode', 'WITHDRAW', '$qty', '0', '$total','$update_date')");
+        VALUES ('$username', '$itemcode', 'DEPOSIT', '$qty', '0', '$total','$update_date')");
         /*$insertlogs = mysqli_query($conn, "INSERT INTO `tbllogs`(`dUsername`, `dType`, `dRemark`, `dDate`) VALUES ('$username','User', 'WITHDREW' , '$update_date')");*/
         setcookie('operation_status', 'success', time() + 60, '/'); // Cookie expires in 60 seconds
-        header('Location: item_withdrawal.php');
+        header('Location: item_deposit.php');
         exit;
     }
     else{
         setcookie('operation_status', 'error', time() + 60, '/'); // Cookie expires in 60 seconds
-        header('Location: item_withdrawal.php');
+        header('Location: item_deposit.php');
         exit;
     }
 }

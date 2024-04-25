@@ -139,7 +139,7 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
                                     <input id="inputText3" type="datetime-local" class="form-control" name="Register_Date" required>
                                 </div>
                                 <div style="display: inline-block;">
-                                    <button class="btn btn-primary" type="item_deposit" name="item_deposit" onclick="return confirm('Are you sure?')">Withdraw Item</button>
+                                    <button class="btn btn-primary" type="item_deposit" name="item_deposit" onclick="return confirm('Are you sure?')">Deposit Item</button>
                                     <button class="btn btn-danger" type="reset" onclick="return confirm('Are you sure?')">Reset</button>
                                 </div>
                             </form>
