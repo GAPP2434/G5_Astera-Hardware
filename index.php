@@ -1,4 +1,10 @@
-<?php $username = $_SESSION['username']; ?>
+<?php 
+session_start();
+$username = $_SESSION['username']; 
+if(!isset($username)){
+    header("Location: login.html");
+}
+?>
 <!doctype html>
 <html lang="en">
  
