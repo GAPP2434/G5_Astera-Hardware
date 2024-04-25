@@ -1,10 +1,3 @@
-<?php 
-session_start();
-$username = $_SESSION['username']; 
-if(!isset($username)){
-    header("Location: login.html");
-}
-?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -19,6 +12,8 @@ if(!isset($username)){
     <link rel="stylesheet" href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
     <!-- DataTables CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+    <!-- DataTables Buttons CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
 </head>
 
 <body>
@@ -91,8 +86,8 @@ if(!isset($username)){
                                                 // Include the database connection file
                                                 include 'dbcon.php';
 
-                                                // Query to fetch data from the table
-                                                $query = "SELECT dItemCode, dType, dQty_in, dQty_out, dQty_total, dDateAdded, dUsername FROM tblitemhistory";
+                                                // Query to fetch data from the table and order by Date Modified in descending order
+                                                $query = "SELECT dItemCode, dType, dQty_in, dQty_out, dQty_total, dDateAdded, dUsername FROM tblitemhistory ORDER BY dDateAdded DESC";
                                                 $result = mysqli_query($conn, $query);
                                                 while($row = mysqli_fetch_assoc($result)) {
                                             ?>
@@ -152,11 +147,32 @@ if(!isset($username)){
     <!-- DataTables JS -->
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+    <!-- DataTables Buttons JS -->
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
     <!-- DataTables Initialization -->
     <script>
         $(document).ready(function() {
             $('#example').DataTable({
-                searching: true
+                searching: true,
+                order: [[5, 'desc']], // Order by Date Modified (column index: 5) in descending order
+                dom: 'Blfrtip',
+                buttons: [
+                    {
+                        extend: 'csv',
+                        text: 'Export CSV', // Change the button name here
+                        filename: function() {
+                            var d = new Date();
+                            var date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+                            return 'TransactionHistory-' + date;
+                        }
+                    }
+                ]
             });
         });
     </script>
