@@ -172,7 +172,7 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
                                                     <input type="hidden" name="quantity" id="quantityInput2">
                                                     <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
                                                 </form>
-                                                <a href="product-single.php" class="btn btn-outline-light">Details</a>
+                                                <a href="product-single.php?itemCode=3211" class="btn btn-outline-light">Details</a>
                                             </div>
                                         </div>
                                     </div>

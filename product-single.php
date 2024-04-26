@@ -81,8 +81,8 @@
                                     include "dbcon.php";
 
                                     // Check if the itemCode is submitted via POST
-                                    if (isset($_POST['itemCode'])) {
-                                        $itemCode = $_POST['itemCode'];
+                                    if (isset($_GET['itemCode'])) {
+                                        $itemCode = $_GET['itemCode'];
 
                                         // Fetch item details from tblmasterlist based on item code
                                         $itemQuery = "SELECT dItemName, dItemPrice FROM tblmasterlist WHERE dItemCode = '$itemCode'";
@@ -119,7 +119,7 @@
                                             <h3 class="mb-0 text-primary">$<?php echo $itemPrice; ?></h3>
                                             <div style = "display: flex; float: right; margin-top: 1em;">
                                                 <form method="post" action="addToCart.php" onsubmit="return confirmQuantity('quantityInput1')">
-                                                    <input type="hidden" name="itemCode" value="4523"> <!-- Hardcoded item code -->
+                                                    <input type="hidden" name="itemCode" value="3211"> <!-- Hardcoded item code -->
                                                     <input type="hidden" name="quantity" id="quantityInput1">
                                                     <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
                                                 </form>
