@@ -1,3 +1,8 @@
+<?php
+include 'dbcon.php';
+include 'auth.php';
+checkUserType('user', $conn);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,7 +81,7 @@
                     if ($userType == 'user') {
                         header("Location: homepage-user.php");
                     } elseif ($userType == 'admin') {
-                        header("Location: index.php");
+                        header("Location: homepage-user.php");
                     }
                 } else {
                     // Password is incorrect

@@ -37,7 +37,33 @@ checkUserType('user', $conn);
         <!-- ============================================================== -->
         <!-- left sidebar -->
         <!-- ============================================================== -->
-        <?php include "sidebar.html"?>
+        <?php
+            include "dbcon.php";
+            // Fetch the user's type from the database
+            $userTypeQuery = "SELECT dUserType FROM tblusers WHERE dUsername = '$username'";
+            $userTypeResult = mysqli_query($conn, $userTypeQuery);
+
+            if ($userTypeResult && mysqli_num_rows($userTypeResult) > 0) {
+                $row = mysqli_fetch_assoc($userTypeResult);
+                $userType = $row['dUserType'];
+
+                // Include the appropriate sidebar based on user type
+                if ($userType === "user") {
+                    include "user-sidebar.html";
+                } elseif ($userType === "admin") {
+                    include "sidebar.html";
+                } else {
+                    // Handle the case where user type is neither User nor Admin
+                    echo "Unknown user type";
+                }
+            } else {
+                // Handle the case where user type retrieval failed or user not found
+                echo "Error fetching user type";
+            }
+
+            // Close the database connection
+            mysqli_close($conn);
+            ?>
         <!-- ============================================================== -->
         <!-- end left sidebar -->
         <!-- ============================================================== -->
@@ -52,7 +78,7 @@ checkUserType('user', $conn);
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="page-header">
-                            <h2 class="pageheader-title">Blank Pageheader </h2>
+                            <h2 class="pageheader-title">Transaction History Logs </h2>
                             <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
                             <div class="page-breadcrumb">
                                 <nav aria-label="breadcrumb">
@@ -76,7 +102,7 @@ checkUserType('user', $conn);
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <div class="mb-2">
-                                        <button id="refreshButton" class="btn btn-primary mr-2">Refresh</button>
+                                        <button id="refreshButton" class="btn btn-primary mr-2" onclick="return confirm('Are you sure?')">Refresh</button>
                                         <span id="lastFetchedLabel" class="text-muted"></span>
                                     </div>
                                     <table id="example" class="table table-striped table-bordered">

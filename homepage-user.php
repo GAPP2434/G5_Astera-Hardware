@@ -50,7 +50,33 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
         <!-- ============================================================== -->
         <!-- left sidebar -->
         <!-- ============================================================== -->
-        <?php include "user-sidebar.html"; ?>
+        <?php
+            include "dbcon.php";
+            // Fetch the user's type from the database
+            $userTypeQuery = "SELECT dUserType FROM tblusers WHERE dUsername = '$username'";
+            $userTypeResult = mysqli_query($conn, $userTypeQuery);
+
+            if ($userTypeResult && mysqli_num_rows($userTypeResult) > 0) {
+                $row = mysqli_fetch_assoc($userTypeResult);
+                $userType = $row['dUserType'];
+
+                // Include the appropriate sidebar based on user type
+                if ($userType === "user") {
+                    include "user-sidebar.html";
+                } elseif ($userType === "admin") {
+                    include "sidebar.html";
+                } else {
+                    // Handle the case where user type is neither User nor Admin
+                    echo "Unknown user type";
+                }
+            } else {
+                // Handle the case where user type retrieval failed or user not found
+                echo "Error fetching user type";
+            }
+
+            // Close the database connection
+            mysqli_close($conn);
+            ?>
         <!-- ============================================================== -->
         <!-- end left sidebar -->
         <!-- ============================================================== -->
@@ -218,7 +244,7 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
                                                     <input type="hidden" name="quantity" id="quantityInput3">
                                                     <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
                                                 </form>
-                                                <a href="product-single.php" class="btn btn-outline-light">Details</a>
+                                                <a href="product-single.php?itemCode=4216" class="btn btn-outline-light">Details</a>
                                             </div>
                                         </div>
                                     </div>

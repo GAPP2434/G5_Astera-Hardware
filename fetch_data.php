@@ -1,4 +1,7 @@
 <?php
+include 'auth.php';
+checkUserType('user', $conn);
+
 // Include the database connection file
 include 'dbcon.php';
 

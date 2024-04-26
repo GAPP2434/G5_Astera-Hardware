@@ -1,4 +1,7 @@
 <?php
+include 'auth.php';
+checkUserType('user', $conn);
+
 require_once('tcpdf/tcpdf.php');
 include 'dbcon.php';
 

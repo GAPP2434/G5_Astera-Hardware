@@ -33,6 +33,7 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
     <link href="assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/libs/css/style.css">
     <link rel="stylesheet" href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <link rel="stylesheet" href="user-defined-css.css">
 </head>
 
 <body>
@@ -50,7 +51,33 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
         <!-- ============================================================== -->
         <!-- left sidebar -->
         <!-- ============================================================== -->
-        <?php include "sidebar.html"?>
+        <?php
+            include "dbcon.php";
+            // Fetch the user's type from the database
+            $userTypeQuery = "SELECT dUserType FROM tblusers WHERE dUsername = '$username'";
+            $userTypeResult = mysqli_query($conn, $userTypeQuery);
+
+            if ($userTypeResult && mysqli_num_rows($userTypeResult) > 0) {
+                $row = mysqli_fetch_assoc($userTypeResult);
+                $userType = $row['dUserType'];
+
+                // Include the appropriate sidebar based on user type
+                if ($userType === "user") {
+                    include "user-sidebar.html";
+                } elseif ($userType === "admin") {
+                    include "sidebar.html";
+                } else {
+                    // Handle the case where user type is neither User nor Admin
+                    echo "Unknown user type";
+                }
+            } else {
+                // Handle the case where user type retrieval failed or user not found
+                echo "Error fetching user type";
+            }
+
+            // Close the database connection
+            mysqli_close($conn);
+            ?>
         <!-- ============================================================== -->
         <!-- end left sidebar -->
         <!-- ============================================================== -->

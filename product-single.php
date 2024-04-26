@@ -1,3 +1,8 @@
+<?php
+include 'dbcon.php';
+include 'auth.php';
+checkUserType('user', $conn);
+?>
 <!doctype html>
 <html lang="en">
 
@@ -119,7 +124,7 @@
                                             <h3 class="mb-0 text-primary">$<?php echo $itemPrice; ?></h3>
                                             <div style = "display: flex; float: right; margin-top: 1em;">
                                                 <form method="post" action="addToCart.php" onsubmit="return confirmQuantity('quantityInput1')">
-                                                    <input type="hidden" name="itemCode" value="3211"> <!-- Hardcoded item code -->
+                                                    <input type="hidden" name="itemCode" value="4216"> <!-- Hardcoded item code -->
                                                     <input type="hidden" name="quantity" id="quantityInput1">
                                                     <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
                                                 </form>

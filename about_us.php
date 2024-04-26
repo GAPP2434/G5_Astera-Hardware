@@ -19,8 +19,6 @@ checkUserType('user', $conn);
     <link rel="stylesheet" href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
     <link rel="stylesheet" href="aboutus.css">
     <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-    
-
 </head>
 
 <body>
@@ -38,7 +36,33 @@ checkUserType('user', $conn);
         <!-- ============================================================== -->
         <!-- left sidebar -->
         <!-- ============================================================== -->
-        <?php include "sidebar.html"?>
+        <?php
+            include "dbcon.php";
+            // Fetch the user's type from the database
+            $userTypeQuery = "SELECT dUserType FROM tblusers WHERE dUsername = '$username'";
+            $userTypeResult = mysqli_query($conn, $userTypeQuery);
+
+            if ($userTypeResult && mysqli_num_rows($userTypeResult) > 0) {
+                $row = mysqli_fetch_assoc($userTypeResult);
+                $userType = $row['dUserType'];
+
+                // Include the appropriate sidebar based on user type
+                if ($userType === "user") {
+                    include "user-sidebar.html";
+                } elseif ($userType === "admin") {
+                    include "sidebar.html";
+                } else {
+                    // Handle the case where user type is neither User nor Admin
+                    echo "Unknown user type";
+                }
+            } else {
+                // Handle the case where user type retrieval failed or user not found
+                echo "Error fetching user type";
+            }
+
+            // Close the database connection
+            mysqli_close($conn);
+            ?>
         <!-- ============================================================== -->
         <!-- end left sidebar -->
         <!-- ============================================================== -->
@@ -124,6 +148,10 @@ checkUserType('user', $conn);
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="../assets/vendor/slimscroll/jquery.slimscroll.js"></script>
     <script src="../assets/libs/js/main-js.js"></script>
+    <script src="assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+    <!-- bootstap bundle js -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+</body>
 </body>
  
 </html>
