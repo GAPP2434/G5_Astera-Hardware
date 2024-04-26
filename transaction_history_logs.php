@@ -93,10 +93,22 @@ if(!isset($username)){
                                                 // Include the database connection file
                                                 include 'dbcon.php';
 
-                                                // Query to fetch data from the table and order by Date Modified in descending order
-                                                $query = "SELECT dItemCode, dType, dQty_in, dQty_out, dQty_total, dDateAdded, dUsername FROM tblitemhistory ORDER BY dDateAdded DESC";
-                                                $result = mysqli_query($conn, $query);
-                                                while($row = mysqli_fetch_assoc($result)) {
+                                                // Function to fetch data
+                                                function fetchData() {
+                                                    global $conn;
+                                                    $query = "SELECT dItemCode, dType, dQty_in, dQty_out, dQty_total, dDateAdded, dUsername FROM tblitemhistory ORDER BY dDateAdded DESC";
+                                                    $result = mysqli_query($conn, $query);
+                                                    $data = [];
+                                                    while($row = mysqli_fetch_assoc($result)) {
+                                                        $data[] = $row;
+                                                    }
+                                                    return $data;
+                                                }
+
+                                                // Fetch initial data
+                                                $initialData = fetchData();
+
+                                                foreach ($initialData as $row) {
                                             ?>
                                             <tr>
                                                 <td><?php echo $row['dItemCode']; ?></td>
@@ -110,6 +122,9 @@ if(!isset($username)){
                                             <?php } ?>
                                         </tbody>
                                     </table>
+                                </div>
+                                <div class="text-center mt-4">
+                                    <button id="refreshButton" class="btn btn-primary">Refresh</button>
                                 </div>
                             </div>
                         </div>
@@ -164,25 +179,44 @@ if(!isset($username)){
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
     <!-- DataTables Initialization -->
     <script>
-        $(document).ready(function() {
-            $('#example').DataTable({
-                searching: true,
-                order: [[5, 'desc']], // Order by Date Modified (column index: 5) in descending order
-                dom: 'Blfrtip',
-                buttons: [
-                    {
-                        extend: 'csv',
-                        text: 'Export CSV', // Change the button name here
-                        filename: function() {
-                            var d = new Date();
-                            var date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-                            return 'TransactionHistory-' + date;
-                        }
-                    }
-                ]
+    $(document).ready(function() {
+    var table = $('#example').DataTable({
+        searching: true,
+        order: [[5, 'desc']], // Order by Date Modified (column index: 5) in descending order
+        dom: 'Blfrtip',
+        buttons: [
+            {
+                extend: 'csv',
+                text: 'Export CSV', // Change the button name here
+                filename: function() {
+                    var d = new Date();
+                    var date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+                    return 'TransactionHistory-' + date;
+                }
+            }
+        ]
+    });
+
+    var refreshButton = $('#refreshButton');
+    var isRefreshing = false;
+
+    refreshButton.on('click', function() {
+        if (!isRefreshing) {
+            isRefreshing = true;
+            setTimeout(function() {
+                isRefreshing = false;
+            }, 5000);
+            $.ajax({
+                url: 'fetch_data.php',
+                method: 'POST',
+                success: function(response) {
+                    table.clear().rows.add(JSON.parse(response)).draw();
+                }
             });
-        });
+        }
+    });
+});
+
     </script>
 </body>
- 
 </html>
