@@ -76,6 +76,10 @@ if(!isset($username)){
                             <h5 class="card-header">DataTable Example</h5>
                             <div class="card-body">
                                 <div class="table-responsive">
+                                    <div class="mb-2">
+                                        <button id="refreshButton" class="btn btn-primary mr-2">Refresh</button>
+                                        <span id="lastFetchedLabel" class="text-muted"></span>
+                                    </div>
                                     <table id="example" class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
@@ -93,22 +97,10 @@ if(!isset($username)){
                                                 // Include the database connection file
                                                 include 'dbcon.php';
 
-                                                // Function to fetch data
-                                                function fetchData() {
-                                                    global $conn;
-                                                    $query = "SELECT dItemCode, dType, dQty_in, dQty_out, dQty_total, dDateAdded, dUsername FROM tblitemhistory ORDER BY dDateAdded DESC";
-                                                    $result = mysqli_query($conn, $query);
-                                                    $data = [];
-                                                    while($row = mysqli_fetch_assoc($result)) {
-                                                        $data[] = $row;
-                                                    }
-                                                    return $data;
-                                                }
-
-                                                // Fetch initial data
-                                                $initialData = fetchData();
-
-                                                foreach ($initialData as $row) {
+                                                // Query to fetch data from the table and order by Date Modified in descending order
+                                                $query = "SELECT dItemCode, dType, dQty_in, dQty_out, dQty_total, dDateAdded, dUsername FROM tblitemhistory ORDER BY dDateAdded DESC";
+                                                $result = mysqli_query($conn, $query);
+                                                while($row = mysqli_fetch_assoc($result)) {
                                             ?>
                                             <tr>
                                                 <td><?php echo $row['dItemCode']; ?></td>
@@ -122,9 +114,6 @@ if(!isset($username)){
                                             <?php } ?>
                                         </tbody>
                                     </table>
-                                </div>
-                                <div class="text-center mt-4">
-                                    <button id="refreshButton" class="btn btn-primary">Refresh</button>
                                 </div>
                             </div>
                         </div>
@@ -180,32 +169,38 @@ if(!isset($username)){
     <!-- DataTables Initialization -->
     <script>
     $(document).ready(function() {
-    var table = $('#example').DataTable({
-        searching: true,
-        order: [[5, 'desc']], // Order by Date Modified (column index: 5) in descending order
-        dom: 'Blfrtip',
-        buttons: [
-            {
-                extend: 'csv',
-                text: 'Export CSV', // Change the button name here
-                filename: function() {
-                    var d = new Date();
-                    var date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-                    return 'TransactionHistory-' + date;
+        var table = $('#example').DataTable({
+            searching: true,
+            order: [[5, 'desc']], // Order by Date Modified (column index: 5) in descending order
+            dom: 'flrtipB',
+            buttons: [
+                {
+                    extend: 'csv',
+                    text: 'Export CSV', // Change the button name here
+                    filename: function() {
+                        var d = new Date();
+                        var date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+                        return 'TransactionHistory-' + date;
+                    }
                 }
-            }
-        ]
-    });
+            ]
+        });
 
-    var refreshButton = $('#refreshButton');
-    var isRefreshing = false;
+        var refreshButton = $('#refreshButton');
+        var lastRefreshedLabel = $('#lastFetchedLabel');
+        var lastFetchedTime = localStorage.getItem('lastFetchedTime');
 
-    refreshButton.on('click', function() {
-        if (!isRefreshing) {
-            isRefreshing = true;
-            setTimeout(function() {
-                isRefreshing = false;
-            }, 5000);
+        if (lastFetchedTime) {
+            updateLastFetchedLabel(new Date(parseInt(lastFetchedTime)));
+        } else {
+            lastRefreshedLabel.text('Last fetched: Never');
+        }
+
+        refreshButton.on('click', function() {
+            var now = new Date();
+            updateLastFetchedLabel(now);
+            localStorage.setItem('lastFetchedTime', now.getTime());
+
             $.ajax({
                 url: 'fetch_data.php',
                 method: 'POST',
@@ -213,10 +208,16 @@ if(!isset($username)){
                     table.clear().rows.add(JSON.parse(response)).draw();
                 }
             });
+        });
+
+        function updateLastFetchedLabel(lastFetchedTime) {
+            var now = new Date();
+            var minutesDiff = Math.floor((now.getTime() - lastFetchedTime.getTime()) / 60000);
+            lastRefreshedLabel.text('Last fetched: ' + minutesDiff + ' minute(s) ago');
         }
     });
-});
+</script>
 
-    </script>
 </body>
+ 
 </html>
