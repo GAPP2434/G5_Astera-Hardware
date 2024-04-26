@@ -1,3 +1,10 @@
+<?php
+session_start();
+$username = $_SESSION['username']; 
+if(!isset($username)){
+    header("Location: login.html");
+} ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -22,7 +29,7 @@
         <!-- ============================================================== -->
         <!-- navbar -->
         <!-- ============================================================== -->
-        <?php include "navbar.html"?>
+        <?php include "navbar.php"?>
         <!-- ============================================================== -->
         <!-- end navbar -->
         <!-- ============================================================== -->
@@ -69,7 +76,7 @@
                                         <div id="productslider-1" class="product-carousel carousel slide" data-ride="carousel">
                                             <div class="carousel-inner">
                                                 <div class="carousel-item active">
-                                                    <img class="d-block" src="G5-images/CLAW-HAMMER -HICKORY.jpg" alt="First slide">
+                                                    <img class="d-block" src="G5-images/ACE-LONG-NOSE-PLIERS.jpg" alt="First slide">
                                                 </div>
                                             </div>
                                         </div>
@@ -119,7 +126,7 @@
                                             <h3 class="mb-0 text-primary">$<?php echo $itemPrice; ?></h3>
                                             <div style = "display: flex; float: right; margin-top: 1em;">
                                                 <form method="post" action="addToCart.php" onsubmit="return confirmQuantity('quantityInput1')">
-                                                    <input type="hidden" name="itemCode" value="3211"> <!-- Hardcoded item code -->
+                                                    <input type="hidden" name="itemCode" value="7842"> <!-- Hardcoded item code -->
                                                     <input type="hidden" name="quantity" id="quantityInput1">
                                                     <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
                                                 </form>
