@@ -86,7 +86,7 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
                                                         include "dbcon.php";
 
                                                         // Query to fetch the balance for the logged-in user
-                                                        $balanceQuery = "SELECT dBalance FROM testtable WHERE dUsername = '$username'";
+                                                        $balanceQuery = "SELECT dBalance FROM tblusers WHERE dUsername = '$username'";
                                                         $balanceResult = mysqli_query($conn, $balanceQuery);
 
                                                         // Check if the query was successful

@@ -57,7 +57,7 @@ if (isset($_POST['purchase'])) {
     $totalPrice = calculateTotalPrice($cartItems);
 
     // Fetch the current balance of the user
-    $balanceQuery = "SELECT dBalance FROM testtable WHERE dUsername = '$username'";
+    $balanceQuery = "SELECT dBalance FROM tblusers WHERE dUsername = '$username'";
     $balanceResult = mysqli_query($conn, $balanceQuery);
 
     // Check if the query was successful
@@ -70,7 +70,7 @@ if (isset($_POST['purchase'])) {
         $newBalance = $balance - $totalPrice;
 
         // Update the user's balance in the database
-        $updateBalanceQuery = "UPDATE testtable SET dBalance = $newBalance WHERE dUsername = '$username'";
+        $updateBalanceQuery = "UPDATE tblusers SET dBalance = $newBalance WHERE dUsername = '$username'";
         $updateBalanceResult = mysqli_query($conn, $updateBalanceQuery);
 
         if ($updateBalanceResult) {
@@ -80,7 +80,7 @@ if (isset($_POST['purchase'])) {
 
             if ($clearCartResult) {
             // Redirect back to edit_item.php with a success message
-            setcookie('operation_status', 'success', time() + 60, '/'); // Cookie expires in 60 seconds
+            setcookie('purchase_status', 'success', time() + 60, '/'); // Cookie expires in 60 seconds
             header('Location: checkout.php');
             exit;
             } else {

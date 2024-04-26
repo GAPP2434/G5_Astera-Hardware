@@ -20,7 +20,7 @@ if (isset($_POST['addBalance'])) {
         $amount = mysqli_real_escape_string($conn, $amount);
 
         // Insert the amount into the database
-        $insertQuery = "UPDATE testtable SET dBalance = dBalance + $amount WHERE dUsername = '$username'";
+        $insertQuery = "UPDATE tblusers SET dBalance = dBalance + $amount WHERE dUsername = '$username'";
         $insertResult = mysqli_query($conn, $insertQuery);
 
         // Check if the insertion was successful
