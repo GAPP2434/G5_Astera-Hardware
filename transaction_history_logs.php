@@ -201,6 +201,12 @@ if(!isset($username)){
             updateLastFetchedLabel(now);
             localStorage.setItem('lastFetchedTime', now.getTime());
 
+            // Disable the refresh button for 5 seconds after clicking it
+            refreshButton.prop('disabled', true);
+            setTimeout(function() {
+                refreshButton.prop('disabled', false);
+            }, 5000);
+
             $.ajax({
                 url: 'fetch_data.php',
                 method: 'POST',
