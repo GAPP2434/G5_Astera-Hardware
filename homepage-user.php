@@ -161,10 +161,7 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
                                                     <input type="hidden" name="quantity" id="quantityInput1">
                                                     <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
                                                 </form>
-                                                <form method="post" action="product-single.php">
-                                                    <input type="hidden" name="itemCode" value="4523"> <!-- Hardcoded item code -->
-                                                    <input type="submit" class="btn btn-outline-light" value="Details">
-                                                </form>
+                                                <a href="product-single.php?itemCode=4523" class="btn btn-outline-light">Details</a>
                                             </div>
                                         </div>
                                     </div>

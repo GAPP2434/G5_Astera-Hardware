@@ -122,7 +122,7 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
                                 }
                                 ?>
                             </select>
-                        <div class="arrow-down" style="margin-top: 105px; margin-right: 20px;"></div>
+                        <div class="arrow-down" style="margin-top: 20px; margin-right: 25px;"></div>
                     </div>
                         <button type="submit" class="btn btn-primary btn-lg" onclick="return confirm('Are you sure?')" style="border-radius: 10%; margin-top: 2%;width: 15%;">Export by Item</button>
                 </form>
