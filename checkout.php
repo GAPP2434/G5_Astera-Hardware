@@ -12,6 +12,13 @@ if(isset($_COOKIE['operation_status']) && $_COOKIE['operation_status'] == 'succe
     // Clear the cookie after displaying the message
     setcookie('operation_status', '', time() - 3600, '/');
 }
+if(isset($_COOKIE['purchase_status']) && $_COOKIE['purchase_status'] == 'success') {
+    ?>
+    <script> alert("Successfully Purchased!") </script>
+    <?php 
+    // Clear the cookie after displaying the message
+    setcookie('operation_status', '', time() - 3600, '/');
+}
 if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
     ?>
     <script> alert("There has been an error. Try again in a few minutes or contact an admin.") </script>
@@ -69,20 +76,40 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
                                 <h2 class="pageheader-title">E-commerce Product Checkout </h2>
                                 <p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis faucibus at enim quis massa lobortis rutrum.</p>
                                     
-                                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="d-inline-block">
-                                                    <h5 class="text-muted">Total Earned</h5>
-                                                    <h2 class="mb-0"> $149.00</h2>
-                                                </div>
-                                                <div class="float-right icon-circle-medium  icon-box-lg  bg-brand-light mt-1">
-                                                    <i class="fa fa-money-bill-alt fa-fw fa-sm text-brand"></i>
+                                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12" style = "right: 0; position: absolute; margin-top: -3em; margin-right: 15.5em; ">
+                                            <div class="card" style = "width: 92%;">
+                                                <div class="card-body">
+                                                    <div class="d-inline-block">
+                                                        <h5 class="text-muted">Total Earned</h5>
+                                                        <?php
+                                                        // Include your database connection file
+                                                        include "dbcon.php";
+
+                                                        // Query to fetch the balance for the logged-in user
+                                                        $balanceQuery = "SELECT dBalance FROM testtable WHERE dUsername = '$username'";
+                                                        $balanceResult = mysqli_query($conn, $balanceQuery);
+
+                                                        // Check if the query was successful
+                                                        if ($balanceResult) {
+                                                            // Fetch the balance from the result
+                                                            $row = mysqli_fetch_assoc($balanceResult);
+                                                            $balance = $row['dBalance'];
+
+                                                            // Display the balance
+                                                            echo '<h2 class="mb-0">₱' . $balance . '</h2>';
+                                                        } else {
+                                                            // Handle the case where the query failed
+                                                            echo "Error: " . mysqli_error($conn);
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                    <div class="float-right icon-circle-medium  icon-box-lg  bg-brand-light mt-1">
+                                                        <i class="fa fa-money-bill-alt fa-fw fa-sm text-brand"></i>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    
+                                </div>    
                                 <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
@@ -106,7 +133,6 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
                                             <h4 class="mb-0">Billing address</h4>
                                         </div>
                                         <div class="card-body">
-                                            <form class="needs-validation" novalidate="">
                                                 <div class="row">
                                                     <div class="col-md-6 mb-3">
                                                         <label for="firstName">First name</label>
@@ -125,15 +151,7 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="username">Username</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">@</span>
-                                                        </div>
-                                                        <input type="text" class="form-control" id="username" placeholder="Username" required="">
-                                                        <div class="invalid-feedback" style="width: 100%;">
-                                                            Your username is required.
-                                                        </div>
-                                                    </div>
+                                                    <h3><?php echo "$username"?></h3>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="email">Email <span class="text-muted">(Optional)</span></label>
@@ -183,57 +201,9 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
                                                     </div>
                                                 </div>
                                                 <hr class="mb-4">
-                                                <h4 class="mb-3">Payment</h4>
-                                                <div class="d-block my-3">
-                                                    <div class="custom-control custom-radio">
-                                                        <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
-                                                        <label class="custom-control-label" for="credit">Credit card</label>
-                                                    </div>
-                                                    <div class="custom-control custom-radio">
-                                                        <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="">
-                                                        <label class="custom-control-label" for="debit">Debit card</label>
-                                                    </div>
-                                                    <div class="custom-control custom-radio">
-                                                        <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required="">
-                                                        <label class="custom-control-label" for="paypal">PayPal</label>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6 mb-3">
-                                                        <label for="cc-name">Name on card</label>
-                                                        <input type="text" class="form-control" id="cc-name" placeholder="" required="">
-                                                        <small class="text-muted">Full name as displayed on card</small>
-                                                        <div class="invalid-feedback">
-                                                            Name on card is required
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label for="cc-number">Credit card number</label>
-                                                        <input type="text" class="form-control" id="cc-number" placeholder="" required="">
-                                                        <div class="invalid-feedback">
-                                                            Credit card number is required
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-3 mb-3">
-                                                        <label for="cc-expiration">Expiration</label>
-                                                        <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
-                                                        <div class="invalid-feedback">
-                                                            Expiration date required
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3 mb-3">
-                                                        <label for="cc-cvv">CVV</label>
-                                                        <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
-                                                        <div class="invalid-feedback">
-                                                            Security code required
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="mb-4">
-                                                <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
-                                            </form>
+                                                <form method = "post" action = "purchaseCart.php">
+                                                    <button class="btn btn-primary btn-lg btn-block" type="submit" name = "purchase" onclick="return confirm('Are you sure?')">Purchase</button>
+                                                </form>
                                         </div>
                                     </div>
                                 </div>
