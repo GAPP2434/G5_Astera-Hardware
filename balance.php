@@ -50,7 +50,33 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
         <!-- ============================================================== -->
         <!-- left sidebar -->
         <!-- ============================================================== -->
-        <?php include "user-sidebar.html";?>
+        <?php
+            include "dbcon.php";
+            // Fetch the user's type from the database
+            $userTypeQuery = "SELECT dUserType FROM tblusers WHERE dUsername = '$username'";
+            $userTypeResult = mysqli_query($conn, $userTypeQuery);
+
+            if ($userTypeResult && mysqli_num_rows($userTypeResult) > 0) {
+                $row = mysqli_fetch_assoc($userTypeResult);
+                $userType = $row['dUserType'];
+
+                // Include the appropriate sidebar based on user type
+                if ($userType === "user") {
+                    include "user-sidebar.html";
+                } elseif ($userType === "admin") {
+                    include "sidebar.html";
+                } else {
+                    // Handle the case where user type is neither User nor Admin
+                    echo "Unknown user type";
+                }
+            } else {
+                // Handle the case where user type retrieval failed or user not found
+                echo "Error fetching user type";
+            }
+
+            // Close the database connection
+            mysqli_close($conn);
+            ?>
         <!-- ============================================================== -->
         <!-- end left sidebar -->
         <!-- ============================================================== -->
@@ -183,7 +209,7 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
                                                     </div>
                                                 </div>
                                                 <hr class="mb-4">
-                                                <button class="btn btn-primary btn-lg btn-block" type="submit" name = "addBalance">Add Balance</button>
+                                                <button class="btn btn-primary btn-lg btn-block" type="submit" name = "addBalance" onclick="return confirm('Are you sure?')">Add Balance</button>
                                             </form>
                                         </div>
                                     </div>

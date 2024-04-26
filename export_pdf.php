@@ -1,6 +1,10 @@
 <?php
-require_once('tcpdf/tcpdf.php');
 include 'dbcon.php';
+include 'auth.php';
+checkUserType('user', $conn);
+
+require_once('tcpdf/tcpdf.php');
+
 
 // Fetch data from tblitemhistory
 $query = mysqli_query($conn, "SELECT * FROM tblitemhistory");

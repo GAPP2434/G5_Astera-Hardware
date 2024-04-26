@@ -1,5 +1,8 @@
 <?php
 include 'dbcon.php';
+include 'auth.php';
+checkUserType('user', $conn);
+
 session_start();
 date_default_timezone_set("Asia/Hong_Kong");
 $date=date("m/d/Y");

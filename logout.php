@@ -1,7 +1,11 @@
 <?php
 include 'dbcon.php';
 
-session_start(); // Start the session
+session_start();
+$username = $_SESSION['username']; 
+if(!isset($username)){
+    header("Location: login.html");
+}
     
     if(isset($_POST['logout'])){
         date_default_timezone_set('Asia/Manila');

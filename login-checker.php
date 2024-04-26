@@ -76,7 +76,7 @@
                     if ($userType == 'user') {
                         header("Location: homepage-user.php");
                     } elseif ($userType == 'admin') {
-                        header("Location: index.php");
+                        header("Location: homepage-user.php");
                     }
                 } else {
                     // Password is incorrect
