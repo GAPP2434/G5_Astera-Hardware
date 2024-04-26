@@ -1,8 +1,3 @@
-<?php
-include 'dbcon.php';
-include 'auth.php';
-checkUserType('user', $conn);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
