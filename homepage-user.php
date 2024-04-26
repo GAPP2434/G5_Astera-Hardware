@@ -124,8 +124,10 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
                                                     <input type="hidden" name="quantity" id="quantityInput1">
                                                     <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
                                                 </form>
-                                                <a href="#" class="btn btn-outline-light">Details</a>
-                                                <a href="#" class="btn btn-outline-light"><i class="fas fa-exchange-alt"></i></a>
+                                                <form method="post" action="product-single.php">
+                                                    <input type="hidden" name="itemCode" value="4523"> <!-- Hardcoded item code -->
+                                                    <input type="submit" class="btn btn-outline-light" value="Details">
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -169,7 +171,7 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
                                                     <input type="hidden" name="quantity" id="quantityInput2">
                                                     <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
                                                 </form>
-                                                <a href="#" class="btn btn-outline-light">Details</a>
+                                                <a href="product-single.php" class="btn btn-outline-light">Details</a>
                                             </div>
                                         </div>
                                     </div>
