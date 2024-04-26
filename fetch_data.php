@@ -1,10 +1,9 @@
 <?php
+include 'dbcon.php';
 include 'auth.php';
 checkUserType('user', $conn);
 
 // Include the database connection file
-include 'dbcon.php';
-
 $query = "SELECT dItemCode, dType, dQty_in, dQty_out, dQty_total, dDateAdded, dUsername FROM tblitemhistory ORDER BY dDateAdded DESC";
 $result = mysqli_query($conn, $query);
 $data = [];

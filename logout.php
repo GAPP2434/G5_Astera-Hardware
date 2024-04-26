@@ -1,8 +1,9 @@
 <?php
+include 'dbcon.php';
 include 'auth.php';
 checkUserType('user', $conn);
 
-include 'dbcon.php';
+
 
 session_start(); // Start the session
     
