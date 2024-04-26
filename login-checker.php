@@ -50,12 +50,12 @@
             $password = $_POST['password'];
 
             // Retrieve the hashed password and fullname from the database for the given username (case-sensitive)
-            $query = "SELECT dPassword FROM tblusers WHERE BINARY dUsername = ?";
+            $query = "SELECT dPassword, dUserType FROM tblusers WHERE BINARY dUsername = ?";
             $stmt = mysqli_prepare($conn, $query);
             mysqli_stmt_bind_param($stmt, "s", $username);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_store_result($stmt);
-            mysqli_stmt_bind_result($stmt, $hashedPassword);
+            mysqli_stmt_bind_result($stmt, $hashedPassword, $userType);
 
             $count = mysqli_stmt_num_rows($stmt);
             
@@ -70,9 +70,14 @@
                     $insertLog = mysqli_query($conn, "INSERT INTO `tbllogs`(`dUsername`, `dType`, `dRemark`, `dDate`) 
                         VALUES ('".$username."','User','LOGIN','".$currentdate."')");
 
-                    $_SESSION['useraccess'] = '1';
                     $_SESSION['username'] = $username;
-                    header("Location:index.php");    
+
+                    // Redirect based on user type
+                    if ($userType == 'user') {
+                        header("Location: homepage-user.php");
+                    } elseif ($userType == 'admin') {
+                        header("Location: index.php");
+                    }
                 } else {
                     // Password is incorrect
                     echo "<p class='info'>Invalid username or password</p>";
@@ -81,7 +86,7 @@
                 // Username not found in the database
                 echo "<p class='info'>Invalid username or password</p>";
             }
-    }
+        }
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
         ?>
