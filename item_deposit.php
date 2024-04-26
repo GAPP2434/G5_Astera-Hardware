@@ -1,9 +1,8 @@
-<?php 
-session_start();
-$username = $_SESSION['username']; 
-if(!isset($username)){
-    header("Location: login.html");
-}
+<?php
+include 'dbcon.php';
+include 'auth.php';
+checkUserType('user', $conn);
+
 // Check if the cookie indicating operation success exists
 if(isset($_COOKIE['operation_status']) && $_COOKIE['operation_status'] == 'success') {
     ?>
@@ -44,7 +43,7 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
         <!-- ============================================================== -->
         <!-- navbar -->
         <!-- ============================================================== -->
-       <?php include "navbar.html"?>
+       <?php include "navbar.php"?>
         <!-- ============================================================== -->
         <!-- end navbar -->
         <!-- ============================================================== -->

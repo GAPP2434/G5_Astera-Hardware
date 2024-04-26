@@ -1,10 +1,9 @@
-<?php 
-session_start();
-$username = $_SESSION['username']; 
-if(!isset($username)){
-    header("Location: login.html");
-}
+<?php
+include 'dbcon.php';
+include 'auth.php';
+checkUserType('user', $conn);
 ?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -31,7 +30,7 @@ if(!isset($username)){
         <!-- ============================================================== -->
         <!-- navbar -->
         <!-- ============================================================== -->
-       <?php include "navbar.html"?>
+       <?php include "navbar.php"?>
         <!-- ============================================================== -->
         <!-- end navbar -->
         <!-- ============================================================== -->
@@ -76,6 +75,10 @@ if(!isset($username)){
                             <h5 class="card-header">DataTable Example</h5>
                             <div class="card-body">
                                 <div class="table-responsive">
+                                    <div class="mb-2">
+                                        <button id="refreshButton" class="btn btn-primary mr-2">Refresh</button>
+                                        <span id="lastFetchedLabel" class="text-muted"></span>
+                                    </div>
                                     <table id="example" class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
@@ -164,25 +167,62 @@ if(!isset($username)){
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
     <!-- DataTables Initialization -->
     <script>
-        $(document).ready(function() {
-            $('#example').DataTable({
-                searching: true,
-                order: [[5, 'desc']], // Order by Date Modified (column index: 5) in descending order
-                dom: 'Blfrtip',
-                buttons: [
-                    {
-                        extend: 'csv',
-                        text: 'Export CSV', // Change the button name here
-                        filename: function() {
-                            var d = new Date();
-                            var date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-                            return 'TransactionHistory-' + date;
-                        }
+    $(document).ready(function() {
+        var table = $('#example').DataTable({
+            searching: true,
+            order: [[5, 'desc']], // Order by Date Modified (column index: 5) in descending order
+            dom: 'flrtipB',
+            buttons: [
+                {
+                    extend: 'csv',
+                    text: 'Export CSV', // Change the button name here
+                    filename: function() {
+                        var d = new Date();
+                        var date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+                        return 'TransactionHistory-' + date;
                     }
-                ]
+                }
+            ]
+        });
+
+        var refreshButton = $('#refreshButton');
+        var lastRefreshedLabel = $('#lastFetchedLabel');
+        var lastFetchedTime = localStorage.getItem('lastFetchedTime');
+
+        if (lastFetchedTime) {
+            updateLastFetchedLabel(new Date(parseInt(lastFetchedTime)));
+        } else {
+            lastRefreshedLabel.text('Last fetched: Never');
+        }
+
+        refreshButton.on('click', function() {
+            var now = new Date();
+            updateLastFetchedLabel(now);
+            localStorage.setItem('lastFetchedTime', now.getTime());
+
+            // Disable the refresh button for 5 seconds after clicking it
+            refreshButton.prop('disabled', true);
+            setTimeout(function() {
+                refreshButton.prop('disabled', false);
+            }, 5000);
+
+            $.ajax({
+                url: 'fetch_data.php',
+                method: 'POST',
+                success: function(response) {
+                    table.clear().rows.add(JSON.parse(response)).draw();
+                }
             });
         });
-    </script>
+
+        function updateLastFetchedLabel(lastFetchedTime) {
+            var now = new Date();
+            var minutesDiff = Math.floor((now.getTime() - lastFetchedTime.getTime()) / 60000);
+            lastRefreshedLabel.text('Last fetched: ' + minutesDiff + ' minute(s) ago');
+        }
+    });
+</script>
+
 </body>
  
 </html>
