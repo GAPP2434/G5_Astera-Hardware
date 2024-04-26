@@ -183,7 +183,7 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
                                     <div class="product-thumbnail">
                                         <div class="product-img-head">
                                             <div class="product-img">
-                                                <img src="G5-images/ACE-LONG-NOSE-PLIERS.jpg" alt="" class="img-fluid"></div>
+                                                <img src="G5-images/download.jpg" alt="" class="img-fluid"></div><!--228x250-->
                                             <div class="ribbons bg-danger"></div>
                                             <div class="ribbons-text">Sold</div>
                                             <div class=""><a href="#" class="product-wishlist-btn"><i class="fas fa-heart"></i></a></div>
@@ -195,7 +195,7 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
                                                 include "dbcon.php";
 
                                                 // Fetch item name from tblmasterlist
-                                                $itemNameQuery = "SELECT dItemName FROM tblmasterlist WHERE dItemName = 'Ace Long Nose Pliers'";
+                                                $itemNameQuery = "SELECT dItemName FROM tblmasterlist WHERE dItemName = 'Ball Pien Hammer'";
                                                 $itemNameResult = mysqli_query($conn, $itemNameQuery);
                                                 $itemNameRow = mysqli_fetch_assoc($itemNameResult);
                                                 $itemName = $itemNameRow['dItemName'];
@@ -213,9 +213,9 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
                                                 <div class="product-price">₱259.00</div>
                                             </div>
                                             <div class="product-btn">
-                                                <form method="post" action="addToCart.php" onsubmit="return confirmQuantity('quantityInput2')">
-                                                    <input type="hidden" name="itemCode" value="3211"> <!-- Hardcoded item code -->
-                                                    <input type="hidden" name="quantity" id="quantityInput2">
+                                                <form method="post" action="addToCart.php" onsubmit="return confirmQuantity('quantityInput3')">
+                                                    <input type="hidden" name="itemCode" value="4216"> <!-- Hardcoded item code -->
+                                                    <input type="hidden" name="quantity" id="quantityInput3">
                                                     <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
                                                 </form>
                                                 <a href="product-single.php" class="btn btn-outline-light">Details</a>
