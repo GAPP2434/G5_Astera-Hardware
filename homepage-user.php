@@ -4,6 +4,21 @@ $username = $_SESSION['username'];
 if(!isset($username)){
     header("Location: login.html");
 }
+// Check if the cookie indicating operation success exists
+if(isset($_COOKIE['operation_status']) && $_COOKIE['operation_status'] == 'success') {
+    ?>
+    <script> alert("Added to Cart!") </script>
+    <?php 
+    // Clear the cookie after displaying the message
+    setcookie('operation_status', '', time() - 3600, '/');
+}
+if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
+    ?>
+    <script> alert("There has been an error. Try again in a few minutes or contact an admin.") </script>
+    <?php 
+    // Clear the cookie after displaying the message
+    setcookie('error', '', time() - 3600, '/');
+}
 ?>
 
 <!doctype html>
@@ -74,15 +89,26 @@ if(!isset($username)){
                                     <div class="product-thumbnail">
                                         <div class="product-img-head">
                                             <div class="product-img">
-                                                <img src="assets/images/eco-product-img-1.png" alt="" class="img-fluid"></div>
+                                                <img src="G5-images/CLAW-HAMMER -HICKORY.jpg" alt="" class="img-fluid"></div>
                                             <div class="ribbons"></div>
                                             <div class="ribbons-text">New</div>
                                             <div class=""><a href="#" class="product-wishlist-btn"><i class="fas fa-heart"></i></a></div>
                                         </div>
                                         <div class="product-content">
                                             <div class="product-content-head">
-                                                <h3 class="product-title">Hi</h3>
-                                                 <h4>hello</h4>
+                                                <?php
+                                                // Include database connection
+                                                include "dbcon.php";
+
+                                                // Fetch item name from tblmasterlist
+                                                $itemNameQuery = "SELECT dItemName FROM tblmasterlist WHERE dItemName = 'Ace Claw Hammer'";
+                                                $itemNameResult = mysqli_query($conn, $itemNameQuery);
+                                                $itemNameRow = mysqli_fetch_assoc($itemNameResult);
+                                                $itemName = $itemNameRow['dItemName'];
+
+                                                ?>
+                                                <h3 class="product-title"><?php echo $itemName; ?></h3>
+                                                <h4>ACE</h4>
                                                 <div class="product-rating d-inline-block">
                                                     <i class="fa fa-fw fa-star"></i>
                                                     <i class="fa fa-fw fa-star"></i>
@@ -90,10 +116,14 @@ if(!isset($username)){
                                                     <i class="fa fa-fw fa-star"></i>
                                                     <i class="fa fa-fw fa-star"></i>
                                                 </div>
-                                                <div class="product-price">$49.00</div>
+                                                <div class="product-price">₱499.00</div>
                                             </div>
                                             <div class="product-btn">
-                                                <a href="#" class="btn btn-primary">Add to Cart</a>
+                                                <form method="post" action="addToCart.php" onsubmit="return confirmQuantity('quantityInput1')">
+                                                    <input type="hidden" name="itemCode" value="4523"> <!-- Hardcoded item code -->
+                                                    <input type="hidden" name="quantity" id="quantityInput1">
+                                                    <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
+                                                </form>
                                                 <a href="#" class="btn btn-outline-light">Details</a>
                                                 <a href="#" class="btn btn-outline-light"><i class="fas fa-exchange-alt"></i></a>
                                             </div>
@@ -104,14 +134,26 @@ if(!isset($username)){
                                     <div class="product-thumbnail">
                                         <div class="product-img-head">
                                             <div class="product-img">
-                                                <img src="assets/images/eco-product-img-2.png" alt="" class="img-fluid"></div>
+                                                <img src="G5-images/ACE-LONG-NOSE-PLIERS.jpg" alt="" class="img-fluid"></div>
                                             <div class="ribbons bg-danger"></div>
                                             <div class="ribbons-text">Sold</div>
                                             <div class=""><a href="#" class="product-wishlist-btn"><i class="fas fa-heart"></i></a></div>
                                         </div>
                                         <div class="product-content">
                                             <div class="product-content-head">
-                                                <h3 class="product-title">T-Shirt Product Title</h3>
+                                                <?php
+                                                // Include database connection
+                                                include "dbcon.php";
+
+                                                // Fetch item name from tblmasterlist
+                                                $itemNameQuery = "SELECT dItemName FROM tblmasterlist WHERE dItemName = 'Ace Long Nose Pliers'";
+                                                $itemNameResult = mysqli_query($conn, $itemNameQuery);
+                                                $itemNameRow = mysqli_fetch_assoc($itemNameResult);
+                                                $itemName = $itemNameRow['dItemName'];
+
+                                                ?>
+                                                <h3 class="product-title"><?php echo $itemName; ?></h3>
+                                                <h4>ACE</h4>
                                                 <div class="product-rating d-inline-block">
                                                     <i class="fa fa-fw fa-star"></i>
                                                     <i class="fa fa-fw fa-star"></i>
@@ -119,12 +161,15 @@ if(!isset($username)){
                                                     <i class="fa fa-fw fa-star"></i>
                                                     <i class="fa fa-fw fa-star"></i>
                                                 </div>
-                                                <div class="product-price">$49.00</div>
+                                                <div class="product-price">₱259.00</div>
                                             </div>
                                             <div class="product-btn">
-                                                <a href="#" class="btn btn-primary">Add to Cart</a>
+                                                <form method="post" action="addToCart.php" onsubmit="return confirmQuantity('quantityInput2')">
+                                                    <input type="hidden" name="itemCode" value="3211"> <!-- Hardcoded item code -->
+                                                    <input type="hidden" name="quantity" id="quantityInput2">
+                                                    <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
+                                                </form>
                                                 <a href="#" class="btn btn-outline-light">Details</a>
-                                                <a href="#" class="btn btn-outline-light"><i class="fas fa-exchange-alt"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -155,173 +200,6 @@ if(!isset($username)){
                                             <div class="product-btn">
                                                 <a href="#" class="btn btn-primary">Add to Cart</a>
                                                 <a href="#" class="btn btn-outline-light">Details</a>
-                                                <a href="#" class="btn btn-outline-light"><i class="fas fa-exchange-alt"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
-                                    <div class="product-thumbnail">
-                                        <div class="product-img-head">
-                                            <div class="product-img">
-                                                <img src="assets/images/eco-product-img-4.png" alt="" class="img-fluid"></div>
-                                            <div class=""><a href="#" class="product-wishlist-btn"><i class="fas fa-heart"></i></a></div>
-                                        </div>
-                                        <div class="product-content">
-                                            <div class="product-content-head">
-                                                <h3 class="product-title">T-Shirt Product Title</h3>
-                                                <div class="product-rating d-inline-block">
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                </div>
-                                                <div class="product-price">$49.00</div>
-                                            </div>
-                                            <div class="product-btn">
-                                                <a href="#" class="btn btn-primary">Add to Cart</a>
-                                                <a href="#" class="btn btn-outline-light">Details</a>
-                                                <a href="#" class="btn btn-outline-light"><i class="fas fa-exchange-alt"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
-                                    <div class="product-thumbnail">
-                                        <div class="product-img-head">
-                                            <div class="product-img">
-                                                <img src="assets/images/eco-product-img-3.png" alt="" class="img-fluid"></div>
-                                            <div class=""><a href="#" class="product-wishlist-btn"><i class="fas fa-heart"></i></a></div>
-                                        </div>
-                                        <div class="product-content">
-                                            <div class="product-content-head">
-                                                <h3 class="product-title">T-Shirt Product Title</h3>
-                                                <div class="product-rating d-inline-block">
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                </div>
-                                                <div class="product-price">$49.00
-                                                    <del class="product-del">$69.00</del>
-                                                </div>
-                                            </div>
-                                            <div class="product-btn">
-                                                <a href="#" class="btn btn-primary">Add to Cart</a>
-                                                <a href="#" class="btn btn-outline-light">Details</a>
-                                                <a href="#" class="btn btn-outline-light"><i class="fas fa-exchange-alt"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
-                                    <div class="product-thumbnail">
-                                        <div class="product-img-head">
-                                            <div class="product-img">
-                                                <img src="assets/images/eco-product-img-2.png" alt="" class="img-fluid"></div>
-                                            <div class=""><a href="#" class="product-wishlist-btn"><i class="fas fa-heart"></i></a></div>
-                                        </div>
-                                        <div class="product-content">
-                                            <div class="product-content-head">
-                                                <h3 class="product-title">T-Shirt Product Title</h3>
-                                                <div class="product-rating d-inline-block">
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                </div>
-                                                <div class="product-price">$49.00</div>
-                                            </div>
-                                            <div class="product-btn">
-                                                <a href="#" class="btn btn-primary">Add to Cart</a>
-                                                <a href="#" class="btn btn-outline-light">Details</a>
-                                                <a href="#" class="btn btn-outline-light"><i class="fas fa-exchange-alt"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
-                                    <div class="product-thumbnail">
-                                        <div class="product-img-head">
-                                            <div class="product-img">
-                                                <img src="assets/images/eco-product-img-1.png" alt="" class="img-fluid"></div>
-                                            <div class=""><a href="#" class="product-wishlist-btn"><i class="fas fa-heart"></i></a></div>
-                                        </div>
-                                        <div class="product-content">
-                                            <div class="product-content-head">
-                                                <h3 class="product-title">T-Shirt Product Title</h3>
-                                                <div class="product-rating d-inline-block">
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                </div>
-                                                <div class="product-price">$49.00</div>
-                                            </div>
-                                            <div class="product-btn">
-                                                <a href="#" class="btn btn-primary">Add to Cart</a>
-                                                <a href="#" class="btn btn-outline-light">Details</a>
-                                                <a href="#" class="btn btn-outline-light"><i class="fas fa-exchange-alt"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
-                                    <div class="product-thumbnail">
-                                        <div class="product-img-head">
-                                            <div class="product-img">
-                                                <img src="assets/images/eco-product-img-2.png" alt="" class="img-fluid"></div>
-                                            <div class=""><a href="#" class="product-wishlist-btn"><i class="fas fa-heart"></i></a></div>
-                                        </div>
-                                        <div class="product-content">
-                                            <div class="product-content-head">
-                                                <h3 class="product-title">T-Shirt Product Title</h3>
-                                                <div class="product-rating d-inline-block">
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                </div>
-                                                <div class="product-price">$49.00</div>
-                                            </div>
-                                            <div class="product-btn">
-                                                <a href="#" class="btn btn-primary">Add to Cart</a>
-                                                <a href="#" class="btn btn-outline-light">Details</a>
-                                                <a href="#" class="btn btn-outline-light"><i class="fas fa-exchange-alt"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
-                                    <div class="product-thumbnail">
-                                        <div class="product-img-head">
-                                            <div class="product-img">
-                                                <img src="assets/images/eco-product-img-4.png" alt="" class="img-fluid"></div>
-                                            <div class=""><a href="#" class="product-wishlist-btn"><i class="fas fa-heart"></i></a></div>
-                                        </div>
-                                        <div class="product-content">
-                                            <div class="product-content-head">
-                                                <h3 class="product-title">T-Shirt Product Title</h3>
-                                                <div class="product-rating d-inline-block">
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                    <i class="fa fa-fw fa-star"></i>
-                                                </div>
-                                                <div class="product-price">$49.00
-                                                    <del class="product-del">$69.00</del>
-                                                </div>
-                                            </div>
-                                            <div class="product-btn">
-                                                <a href="#" class="btn btn-primary">Add to Cart</a>
-                                                <a href="#" class="btn btn-outline-light">Details</a>
-                                                <a href="#" class="btn btn-outline-light"><i class="fas fa-exchange-alt"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -486,6 +364,22 @@ if(!isset($username)){
         <script src="assets/vendor/slimscroll/jquery.slimscroll.js"></script>
         <!-- main js -->
         <script src="assets/libs/js/main-js.js"></script>
+        <script>
+            function confirmQuantity(inputId) {
+                var quantity = prompt("Enter quantity:");
+                if (quantity !== null && quantity !== "" && !isNaN(quantity) && parseInt(quantity) > 0) {
+                    // If a valid quantity is entered, update the input value with the specified ID and allow form submission
+                    document.getElementById(inputId).value = quantity;
+                    return true;
+                } else {
+                    // If the user cancels or enters an invalid quantity, prevent form submission
+                    alert("Please enter a valid quantity.");
+                    return false;
+                }
+            }
+
+        </script>
+
 </body>
  
 </html>
