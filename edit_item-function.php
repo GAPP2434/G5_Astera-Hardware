@@ -1,12 +1,8 @@
 <?php
-session_start();
-$username = $_SESSION['username']; 
-if(!isset($username)){
-    header("Location: login.html");
-}
-
-// Include your database connection code here
 include 'dbcon.php';
+include 'auth.php';
+checkUserType('user', $conn);
+
 date_default_timezone_set('Asia/Manila');
 $currentdate = date('Y-m-d H:i:s');
 

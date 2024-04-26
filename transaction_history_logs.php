@@ -1,10 +1,9 @@
-<?php 
-session_start();
-$username = $_SESSION['username']; 
-if(!isset($username)){
-    header("Location: login.html");
-}
+<?php
+include 'dbcon.php';
+include 'auth.php';
+checkUserType('user', $conn);
 ?>
+
 <!doctype html>
 <html lang="en">
 <head>
