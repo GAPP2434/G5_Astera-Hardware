@@ -66,30 +66,38 @@ if (isset($_POST['purchase'])) {
         $row = mysqli_fetch_assoc($balanceResult);
         $balance = $row['dBalance'];
 
-        // Calculate the new balance after deducting the total price
-        $newBalance = $balance - $totalPrice;
+        // Check if the balance is sufficient for the purchase
+        if ($balance >= $totalPrice) {
+            // Calculate the new balance after deducting the total price
+            $newBalance = $balance - $totalPrice;
 
-        // Update the user's balance in the database
-        $updateBalanceQuery = "UPDATE tblusers SET dBalance = $newBalance WHERE dUsername = '$username'";
-        $updateBalanceResult = mysqli_query($conn, $updateBalanceQuery);
+            // Update the user's balance in the database
+            $updateBalanceQuery = "UPDATE tblusers SET dBalance = $newBalance WHERE dUsername = '$username'";
+            $updateBalanceResult = mysqli_query($conn, $updateBalanceQuery);
 
-        if ($updateBalanceResult) {
-            // Clear the user's cart by deleting all entries from tblusercart
-            $clearCartQuery = "DELETE FROM tblusercart";
-            $clearCartResult = mysqli_query($conn, $clearCartQuery);
+            if ($updateBalanceResult) {
+                // Clear the user's cart by deleting all entries from tblusercart
+                $clearCartQuery = "DELETE FROM tblusercart";
+                $clearCartResult = mysqli_query($conn, $clearCartQuery);
 
-            if ($clearCartResult) {
-            // Redirect back to edit_item.php with a success message
-            setcookie('purchase_status', 'success', time() + 60, '/'); // Cookie expires in 60 seconds
-            header('Location: checkout.php');
-            exit;
+                if ($clearCartResult) {
+                    // Redirect back to checkout.php with a success message
+                    setcookie('purchase_status', 'success', time() + 60, '/'); // Cookie expires in 60 seconds
+                    header('Location: checkout.php');
+                    exit;
+                } else {
+                    setcookie('operation_status', 'error', time() + 60, '/'); // Cookie expires in 60 seconds
+                    header('Location: checkout.php');
+                    exit;
+                }
             } else {
                 setcookie('operation_status', 'error', time() + 60, '/'); // Cookie expires in 60 seconds
                 header('Location: checkout.php');
                 exit;
             }
         } else {
-            setcookie('operation_status', 'error', time() + 60, '/'); // Cookie expires in 60 seconds
+            // Redirect back to checkout.php with an error message
+            setcookie('balance_status', 'insufficient_balance', time() + 60, '/'); // Cookie expires in 60 seconds
             header('Location: checkout.php');
             exit;
         }

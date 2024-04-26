@@ -112,7 +112,7 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
         </div>
                 </form>
             </div>
-            <div class="card-footer bg-white">
+            <div class="card-footer bg-white" style = "width: 100%;">
                 <p class="mb-0">2983 Glenview Drive Corpus Christi, TX 78476</p>
             </div>
         </div>

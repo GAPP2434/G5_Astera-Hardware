@@ -19,6 +19,13 @@ if(isset($_COOKIE['purchase_status']) && $_COOKIE['purchase_status'] == 'success
     // Clear the cookie after displaying the message
     setcookie('operation_status', '', time() - 3600, '/');
 }
+if(isset($_COOKIE['balance_status']) && $_COOKIE['balance_status'] == 'insufficient_balance') {
+    ?>
+    <script> alert("Insufficient Balance!") </script>
+    <?php 
+    // Clear the cookie after displaying the message
+    setcookie('operation_status', '', time() - 3600, '/');
+}
 if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
     ?>
     <script> alert("There has been an error. Try again in a few minutes or contact an admin.") </script>

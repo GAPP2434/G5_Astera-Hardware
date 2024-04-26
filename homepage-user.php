@@ -132,6 +132,7 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
                                         </div>
                                     </div>
                                 </div>
+                                <!--Item-->
                                 <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
                                     <div class="product-thumbnail">
                                         <div class="product-img-head">
@@ -176,18 +177,32 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+                                <!--End of Item-->
+                                 <!--Item-->
+                                 <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
                                     <div class="product-thumbnail">
                                         <div class="product-img-head">
                                             <div class="product-img">
-                                                <img src="assets/images/eco-product-img-3.png" alt="" class="img-fluid"></div>
-                                            <div class="ribbons bg-brand"></div>
-                                            <div class="ribbons-text">Offer</div>
-                                            <div class=""><a href="#" class="product-wishlist-btn active"><i class="fas fa-heart"></i></a></div>
+                                                <img src="G5-images/ACE-LONG-NOSE-PLIERS.jpg" alt="" class="img-fluid"></div>
+                                            <div class="ribbons bg-danger"></div>
+                                            <div class="ribbons-text">Sold</div>
+                                            <div class=""><a href="#" class="product-wishlist-btn"><i class="fas fa-heart"></i></a></div>
                                         </div>
                                         <div class="product-content">
                                             <div class="product-content-head">
-                                                <h3 class="product-title">T-Shirt Product Title</h3>
+                                                <?php
+                                                // Include database connection
+                                                include "dbcon.php";
+
+                                                // Fetch item name from tblmasterlist
+                                                $itemNameQuery = "SELECT dItemName FROM tblmasterlist WHERE dItemName = 'Ace Long Nose Pliers'";
+                                                $itemNameResult = mysqli_query($conn, $itemNameQuery);
+                                                $itemNameRow = mysqli_fetch_assoc($itemNameResult);
+                                                $itemName = $itemNameRow['dItemName'];
+
+                                                ?>
+                                                <h3 class="product-title"><?php echo $itemName; ?></h3>
+                                                <h4>ACE</h4>
                                                 <div class="product-rating d-inline-block">
                                                     <i class="fa fa-fw fa-star"></i>
                                                     <i class="fa fa-fw fa-star"></i>
@@ -195,17 +210,434 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
                                                     <i class="fa fa-fw fa-star"></i>
                                                     <i class="fa fa-fw fa-star"></i>
                                                 </div>
-                                                <div class="product-price">$49.00
-                                                    <del class="product-del">$69.00</del>
-                                                </div>
+                                                <div class="product-price">₱259.00</div>
                                             </div>
                                             <div class="product-btn">
-                                                <a href="#" class="btn btn-primary">Add to Cart</a>
-                                                <a href="#" class="btn btn-outline-light">Details</a>
+                                                <form method="post" action="addToCart.php" onsubmit="return confirmQuantity('quantityInput2')">
+                                                    <input type="hidden" name="itemCode" value="3211"> <!-- Hardcoded item code -->
+                                                    <input type="hidden" name="quantity" id="quantityInput2">
+                                                    <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
+                                                </form>
+                                                <a href="product-single.php" class="btn btn-outline-light">Details</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <!--End of Item-->
+                                 <!--Item-->
+                                 <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+                                    <div class="product-thumbnail">
+                                        <div class="product-img-head">
+                                            <div class="product-img">
+                                                <img src="G5-images/ACE-LONG-NOSE-PLIERS.jpg" alt="" class="img-fluid"></div>
+                                            <div class="ribbons bg-danger"></div>
+                                            <div class="ribbons-text">Sold</div>
+                                            <div class=""><a href="#" class="product-wishlist-btn"><i class="fas fa-heart"></i></a></div>
+                                        </div>
+                                        <div class="product-content">
+                                            <div class="product-content-head">
+                                                <?php
+                                                // Include database connection
+                                                include "dbcon.php";
+
+                                                // Fetch item name from tblmasterlist
+                                                $itemNameQuery = "SELECT dItemName FROM tblmasterlist WHERE dItemName = 'Ace Long Nose Pliers'";
+                                                $itemNameResult = mysqli_query($conn, $itemNameQuery);
+                                                $itemNameRow = mysqli_fetch_assoc($itemNameResult);
+                                                $itemName = $itemNameRow['dItemName'];
+
+                                                ?>
+                                                <h3 class="product-title"><?php echo $itemName; ?></h3>
+                                                <h4>ACE</h4>
+                                                <div class="product-rating d-inline-block">
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                </div>
+                                                <div class="product-price">₱259.00</div>
+                                            </div>
+                                            <div class="product-btn">
+                                                <form method="post" action="addToCart.php" onsubmit="return confirmQuantity('quantityInput2')">
+                                                    <input type="hidden" name="itemCode" value="3211"> <!-- Hardcoded item code -->
+                                                    <input type="hidden" name="quantity" id="quantityInput2">
+                                                    <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
+                                                </form>
+                                                <a href="product-single.php" class="btn btn-outline-light">Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End of Item-->
+                                 <!--Item-->
+                                 <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+                                    <div class="product-thumbnail">
+                                        <div class="product-img-head">
+                                            <div class="product-img">
+                                                <img src="G5-images/ACE-LONG-NOSE-PLIERS.jpg" alt="" class="img-fluid"></div>
+                                            <div class="ribbons bg-danger"></div>
+                                            <div class="ribbons-text">Sold</div>
+                                            <div class=""><a href="#" class="product-wishlist-btn"><i class="fas fa-heart"></i></a></div>
+                                        </div>
+                                        <div class="product-content">
+                                            <div class="product-content-head">
+                                                <?php
+                                                // Include database connection
+                                                include "dbcon.php";
+
+                                                // Fetch item name from tblmasterlist
+                                                $itemNameQuery = "SELECT dItemName FROM tblmasterlist WHERE dItemName = 'Ace Long Nose Pliers'";
+                                                $itemNameResult = mysqli_query($conn, $itemNameQuery);
+                                                $itemNameRow = mysqli_fetch_assoc($itemNameResult);
+                                                $itemName = $itemNameRow['dItemName'];
+
+                                                ?>
+                                                <h3 class="product-title"><?php echo $itemName; ?></h3>
+                                                <h4>ACE</h4>
+                                                <div class="product-rating d-inline-block">
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                </div>
+                                                <div class="product-price">₱259.00</div>
+                                            </div>
+                                            <div class="product-btn">
+                                                <form method="post" action="addToCart.php" onsubmit="return confirmQuantity('quantityInput2')">
+                                                    <input type="hidden" name="itemCode" value="3211"> <!-- Hardcoded item code -->
+                                                    <input type="hidden" name="quantity" id="quantityInput2">
+                                                    <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
+                                                </form>
+                                                <a href="product-single.php" class="btn btn-outline-light">Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End of Item-->
+                                 <!--Item-->
+                                 <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+                                    <div class="product-thumbnail">
+                                        <div class="product-img-head">
+                                            <div class="product-img">
+                                                <img src="G5-images/ACE-LONG-NOSE-PLIERS.jpg" alt="" class="img-fluid"></div>
+                                            <div class="ribbons bg-danger"></div>
+                                            <div class="ribbons-text">Sold</div>
+                                            <div class=""><a href="#" class="product-wishlist-btn"><i class="fas fa-heart"></i></a></div>
+                                        </div>
+                                        <div class="product-content">
+                                            <div class="product-content-head">
+                                                <?php
+                                                // Include database connection
+                                                include "dbcon.php";
+
+                                                // Fetch item name from tblmasterlist
+                                                $itemNameQuery = "SELECT dItemName FROM tblmasterlist WHERE dItemName = 'Ace Long Nose Pliers'";
+                                                $itemNameResult = mysqli_query($conn, $itemNameQuery);
+                                                $itemNameRow = mysqli_fetch_assoc($itemNameResult);
+                                                $itemName = $itemNameRow['dItemName'];
+
+                                                ?>
+                                                <h3 class="product-title"><?php echo $itemName; ?></h3>
+                                                <h4>ACE</h4>
+                                                <div class="product-rating d-inline-block">
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                </div>
+                                                <div class="product-price">₱259.00</div>
+                                            </div>
+                                            <div class="product-btn">
+                                                <form method="post" action="addToCart.php" onsubmit="return confirmQuantity('quantityInput2')">
+                                                    <input type="hidden" name="itemCode" value="3211"> <!-- Hardcoded item code -->
+                                                    <input type="hidden" name="quantity" id="quantityInput2">
+                                                    <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
+                                                </form>
+                                                <a href="product-single.php" class="btn btn-outline-light">Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End of Item-->
+                                 <!--Item-->
+                                 <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+                                    <div class="product-thumbnail">
+                                        <div class="product-img-head">
+                                            <div class="product-img">
+                                                <img src="G5-images/ACE-LONG-NOSE-PLIERS.jpg" alt="" class="img-fluid"></div>
+                                            <div class="ribbons bg-danger"></div>
+                                            <div class="ribbons-text">Sold</div>
+                                            <div class=""><a href="#" class="product-wishlist-btn"><i class="fas fa-heart"></i></a></div>
+                                        </div>
+                                        <div class="product-content">
+                                            <div class="product-content-head">
+                                                <?php
+                                                // Include database connection
+                                                include "dbcon.php";
+
+                                                // Fetch item name from tblmasterlist
+                                                $itemNameQuery = "SELECT dItemName FROM tblmasterlist WHERE dItemName = 'Ace Long Nose Pliers'";
+                                                $itemNameResult = mysqli_query($conn, $itemNameQuery);
+                                                $itemNameRow = mysqli_fetch_assoc($itemNameResult);
+                                                $itemName = $itemNameRow['dItemName'];
+
+                                                ?>
+                                                <h3 class="product-title"><?php echo $itemName; ?></h3>
+                                                <h4>ACE</h4>
+                                                <div class="product-rating d-inline-block">
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                </div>
+                                                <div class="product-price">₱259.00</div>
+                                            </div>
+                                            <div class="product-btn">
+                                                <form method="post" action="addToCart.php" onsubmit="return confirmQuantity('quantityInput2')">
+                                                    <input type="hidden" name="itemCode" value="3211"> <!-- Hardcoded item code -->
+                                                    <input type="hidden" name="quantity" id="quantityInput2">
+                                                    <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
+                                                </form>
+                                                <a href="product-single.php" class="btn btn-outline-light">Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End of Item-->
+                                 <!--Item-->
+                                 <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+                                    <div class="product-thumbnail">
+                                        <div class="product-img-head">
+                                            <div class="product-img">
+                                                <img src="G5-images/ACE-LONG-NOSE-PLIERS.jpg" alt="" class="img-fluid"></div>
+                                            <div class="ribbons bg-danger"></div>
+                                            <div class="ribbons-text">Sold</div>
+                                            <div class=""><a href="#" class="product-wishlist-btn"><i class="fas fa-heart"></i></a></div>
+                                        </div>
+                                        <div class="product-content">
+                                            <div class="product-content-head">
+                                                <?php
+                                                // Include database connection
+                                                include "dbcon.php";
+
+                                                // Fetch item name from tblmasterlist
+                                                $itemNameQuery = "SELECT dItemName FROM tblmasterlist WHERE dItemName = 'Ace Long Nose Pliers'";
+                                                $itemNameResult = mysqli_query($conn, $itemNameQuery);
+                                                $itemNameRow = mysqli_fetch_assoc($itemNameResult);
+                                                $itemName = $itemNameRow['dItemName'];
+
+                                                ?>
+                                                <h3 class="product-title"><?php echo $itemName; ?></h3>
+                                                <h4>ACE</h4>
+                                                <div class="product-rating d-inline-block">
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                </div>
+                                                <div class="product-price">₱259.00</div>
+                                            </div>
+                                            <div class="product-btn">
+                                                <form method="post" action="addToCart.php" onsubmit="return confirmQuantity('quantityInput2')">
+                                                    <input type="hidden" name="itemCode" value="3211"> <!-- Hardcoded item code -->
+                                                    <input type="hidden" name="quantity" id="quantityInput2">
+                                                    <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
+                                                </form>
+                                                <a href="product-single.php" class="btn btn-outline-light">Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End of Item-->
+                                 <!--Item-->
+                                 <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+                                    <div class="product-thumbnail">
+                                        <div class="product-img-head">
+                                            <div class="product-img">
+                                                <img src="G5-images/ACE-LONG-NOSE-PLIERS.jpg" alt="" class="img-fluid"></div>
+                                            <div class="ribbons bg-danger"></div>
+                                            <div class="ribbons-text">Sold</div>
+                                            <div class=""><a href="#" class="product-wishlist-btn"><i class="fas fa-heart"></i></a></div>
+                                        </div>
+                                        <div class="product-content">
+                                            <div class="product-content-head">
+                                                <?php
+                                                // Include database connection
+                                                include "dbcon.php";
+
+                                                // Fetch item name from tblmasterlist
+                                                $itemNameQuery = "SELECT dItemName FROM tblmasterlist WHERE dItemName = 'Ace Long Nose Pliers'";
+                                                $itemNameResult = mysqli_query($conn, $itemNameQuery);
+                                                $itemNameRow = mysqli_fetch_assoc($itemNameResult);
+                                                $itemName = $itemNameRow['dItemName'];
+
+                                                ?>
+                                                <h3 class="product-title"><?php echo $itemName; ?></h3>
+                                                <h4>ACE</h4>
+                                                <div class="product-rating d-inline-block">
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                </div>
+                                                <div class="product-price">₱259.00</div>
+                                            </div>
+                                            <div class="product-btn">
+                                                <form method="post" action="addToCart.php" onsubmit="return confirmQuantity('quantityInput2')">
+                                                    <input type="hidden" name="itemCode" value="3211"> <!-- Hardcoded item code -->
+                                                    <input type="hidden" name="quantity" id="quantityInput2">
+                                                    <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
+                                                </form>
+                                                <a href="product-single.php" class="btn btn-outline-light">Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End of Item-->
+                                 <!--Item-->
+                                 <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+                                    <div class="product-thumbnail">
+                                        <div class="product-img-head">
+                                            <div class="product-img">
+                                                <img src="G5-images/ACE-LONG-NOSE-PLIERS.jpg" alt="" class="img-fluid"></div>
+                                            <div class="ribbons bg-danger"></div>
+                                            <div class="ribbons-text">Sold</div>
+                                            <div class=""><a href="#" class="product-wishlist-btn"><i class="fas fa-heart"></i></a></div>
+                                        </div>
+                                        <div class="product-content">
+                                            <div class="product-content-head">
+                                                <?php
+                                                // Include database connection
+                                                include "dbcon.php";
+
+                                                // Fetch item name from tblmasterlist
+                                                $itemNameQuery = "SELECT dItemName FROM tblmasterlist WHERE dItemName = 'Ace Long Nose Pliers'";
+                                                $itemNameResult = mysqli_query($conn, $itemNameQuery);
+                                                $itemNameRow = mysqli_fetch_assoc($itemNameResult);
+                                                $itemName = $itemNameRow['dItemName'];
+
+                                                ?>
+                                                <h3 class="product-title"><?php echo $itemName; ?></h3>
+                                                <h4>ACE</h4>
+                                                <div class="product-rating d-inline-block">
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                </div>
+                                                <div class="product-price">₱259.00</div>
+                                            </div>
+                                            <div class="product-btn">
+                                                <form method="post" action="addToCart.php" onsubmit="return confirmQuantity('quantityInput2')">
+                                                    <input type="hidden" name="itemCode" value="3211"> <!-- Hardcoded item code -->
+                                                    <input type="hidden" name="quantity" id="quantityInput2">
+                                                    <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
+                                                </form>
+                                                <a href="product-single.php" class="btn btn-outline-light">Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End of Item-->
+                                 <!--Item-->
+                                 <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+                                    <div class="product-thumbnail">
+                                        <div class="product-img-head">
+                                            <div class="product-img">
+                                                <img src="G5-images/ACE-LONG-NOSE-PLIERS.jpg" alt="" class="img-fluid"></div>
+                                            <div class="ribbons bg-danger"></div>
+                                            <div class="ribbons-text">Sold</div>
+                                            <div class=""><a href="#" class="product-wishlist-btn"><i class="fas fa-heart"></i></a></div>
+                                        </div>
+                                        <div class="product-content">
+                                            <div class="product-content-head">
+                                                <?php
+                                                // Include database connection
+                                                include "dbcon.php";
+
+                                                // Fetch item name from tblmasterlist
+                                                $itemNameQuery = "SELECT dItemName FROM tblmasterlist WHERE dItemName = 'Ace Long Nose Pliers'";
+                                                $itemNameResult = mysqli_query($conn, $itemNameQuery);
+                                                $itemNameRow = mysqli_fetch_assoc($itemNameResult);
+                                                $itemName = $itemNameRow['dItemName'];
+
+                                                ?>
+                                                <h3 class="product-title"><?php echo $itemName; ?></h3>
+                                                <h4>ACE</h4>
+                                                <div class="product-rating d-inline-block">
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                </div>
+                                                <div class="product-price">₱259.00</div>
+                                            </div>
+                                            <div class="product-btn">
+                                                <form method="post" action="addToCart.php" onsubmit="return confirmQuantity('quantityInput2')">
+                                                    <input type="hidden" name="itemCode" value="3211"> <!-- Hardcoded item code -->
+                                                    <input type="hidden" name="quantity" id="quantityInput2">
+                                                    <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
+                                                </form>
+                                                <a href="product-single.php" class="btn btn-outline-light">Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End of Item-->
+                                 <!--Item-->
+                                 <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+                                    <div class="product-thumbnail">
+                                        <div class="product-img-head">
+                                            <div class="product-img">
+                                                <img src="G5-images/ACE-LONG-NOSE-PLIERS.jpg" alt="" class="img-fluid"></div>
+                                            <div class="ribbons bg-danger"></div>
+                                            <div class="ribbons-text">Sold</div>
+                                            <div class=""><a href="#" class="product-wishlist-btn"><i class="fas fa-heart"></i></a></div>
+                                        </div>
+                                        <div class="product-content">
+                                            <div class="product-content-head">
+                                                <?php
+                                                // Include database connection
+                                                include "dbcon.php";
+
+                                                // Fetch item name from tblmasterlist
+                                                $itemNameQuery = "SELECT dItemName FROM tblmasterlist WHERE dItemName = 'Ace Long Nose Pliers'";
+                                                $itemNameResult = mysqli_query($conn, $itemNameQuery);
+                                                $itemNameRow = mysqli_fetch_assoc($itemNameResult);
+                                                $itemName = $itemNameRow['dItemName'];
+
+                                                ?>
+                                                <h3 class="product-title"><?php echo $itemName; ?></h3>
+                                                <h4>ACE</h4>
+                                                <div class="product-rating d-inline-block">
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                    <i class="fa fa-fw fa-star"></i>
+                                                </div>
+                                                <div class="product-price">₱259.00</div>
+                                            </div>
+                                            <div class="product-btn">
+                                                <form method="post" action="addToCart.php" onsubmit="return confirmQuantity('quantityInput2')">
+                                                    <input type="hidden" name="itemCode" value="3211"> <!-- Hardcoded item code -->
+                                                    <input type="hidden" name="quantity" id="quantityInput2">
+                                                    <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
+                                                </form>
+                                                <a href="product-single.php" class="btn btn-outline-light">Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End of Item-->
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <nav aria-label="Page navigation example">
                                         <ul class="pagination">
