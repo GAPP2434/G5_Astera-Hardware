@@ -32,7 +32,7 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
 
 <body>
     <div class="dashboard-main-wrapper">
-       <?php include "navbar.html"?>
+       <?php include "navbar.php"?>
         <?php include "sidebar.html"?>
         <div class="dashboard-wrapper">
             <div class="container-fluid dashboard-content">

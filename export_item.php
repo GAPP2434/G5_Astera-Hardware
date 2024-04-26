@@ -9,7 +9,7 @@ $time = date("h:i:sa");
 $itemCode = $_POST['Item_Code'];
 
 
-$file = "ITEM TRANSACTION LOGS_ITEM_" . $itemCode . "_" . $date . ".xls";
+$file = "ITEM TRANSACTION LOGS_ITEM " . $itemCode . "_" . $date . ".xls";
 header("Content-type: application/vnd.ms-excel");
 header("Content-Disposition: attachment; filename=$file");
 ?>
