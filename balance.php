@@ -98,7 +98,7 @@ if(isset($_COOKIE['error']) && $_COOKIE['error'] == 'true') {
                                             <div class="card" style = "width: 92%;">
                                                 <div class="card-body">
                                                     <div class="d-inline-block">
-                                                        <h5 class="text-muted">Total Earned</h5>
+                                                        <h5 class="text-muted">Balance</h5>
                                                         <?php
                                                         // Include your database connection file
                                                         include "dbcon.php";
